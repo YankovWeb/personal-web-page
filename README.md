@@ -24,8 +24,9 @@ Personal portfolio and content site with a Supabase-backed admin CMS. Public pag
 - **Theme toggle** — Animated light/dark mode with CSS design tokens
 - **OG preview** — Admin can fetch Open Graph metadata when adding project share URLs
 - **Motion system** — Reusable reveal/stagger primitives; respects reduced-motion preference
-
+ 
 ## Project structure
+1
 
 ```
 src/
