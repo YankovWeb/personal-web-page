@@ -27,9 +27,9 @@ export function HomeHero({ profile }: { profile: Profile | null }) {
   const [avatarSrc, setAvatarSrc] = useState(() => resolveAvatarUrl(profile));
 
   return (
-    <section className="relative py-12 md:py-16">
-      <div className="pointer-events-none absolute -left-20 top-0 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-48 w-48 rounded-full bg-accent-secondary/10 blur-3xl" />
+    <section className="relative overflow-hidden py-12 md:py-16">
+      <div className="pointer-events-none absolute left-0 top-0 h-40 w-40 -translate-x-1/4 rounded-full bg-accent/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-36 w-36 translate-x-1/4 rounded-full bg-accent-secondary/10 blur-3xl" />
 
       <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_280px] lg:gap-14 xl:grid-cols-[1fr_300px]">
         <div>

@@ -60,6 +60,10 @@
 
 html {
   color-scheme: light;
+  overflow-x: clip;
+  min-height: 100%;
+  background: var(--background);
+  transition: background-color 0.4s ease;
 }
 
 html.dark {
@@ -68,6 +72,8 @@ html.dark {
 
 body {
   position: relative;
+  overflow-x: clip;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
@@ -78,7 +84,7 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -86,6 +92,7 @@ body::before {
     radial-gradient(ellipse 90% 60% at 10% -20%, var(--glow-1), transparent 55%),
     radial-gradient(ellipse 70% 50% at 100% 0%, var(--glow-2), transparent 50%),
     radial-gradient(ellipse 50% 40% at 50% 100%, var(--glow-3), transparent 55%);
+  transition: background 0.4s ease;
 }
 
 ::selection {
