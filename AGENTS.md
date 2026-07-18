@@ -37,7 +37,7 @@ Personal portfolio + CMS for **Grigor Yankov**. Next.js 16 App Router, Supabase 
 | `src/lib/admin/actions.ts` | Server actions for CMS mutations; call `requireAdmin()` |
 | `src/lib/about-data.ts` | Merges Supabase profile/experience/skills with `about-fallback.ts` |
 | `src/lib/types.ts` | Hand-written TS types (not generated from Supabase) |
-| `src/middleware.ts` | Session refresh + admin route protection |
+| `src/proxy.ts` | Session refresh + admin route protection (Next 16 proxy convention, ex-middleware) |
 
 ## Conventions
 

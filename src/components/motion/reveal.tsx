@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 export const motionEase = [0.22, 1, 0.36, 1] as const;
 
 const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -29,7 +29,7 @@ export function Reveal({
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={revealVariants}
-      transition={{ duration: 0.6, delay, ease: motionEase }}
+      transition={{ duration: 0.5, delay, ease: motionEase }}
       className={cn(className)}
     >
       {children}

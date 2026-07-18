@@ -33,11 +33,11 @@ export function AboutTimeline({
             <Briefcase size={20} />
           </div>
           <div>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
               Career journey
             </h2>
             <p className="mt-1 text-sm text-muted">
-              From first shipped MVPs to enterprise native migrations
+              From first shipped MVPs to senior mobile engineering at Phoenix
             </p>
           </div>
         </div>

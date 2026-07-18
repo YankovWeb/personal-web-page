@@ -38,8 +38,11 @@ export function AccessibilityProvider({
 
   useEffect(() => {
     const loaded = loadAccessibilitySettings();
-    setSettings(loaded);
     applyAccessibilitySettings(document.documentElement, loaded);
+    // localStorage is only readable after mount; this one-time cascading
+    // render is the intended hydration path for persisted a11y settings.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSettings(loaded);
     setReady(true);
   }, []);
 

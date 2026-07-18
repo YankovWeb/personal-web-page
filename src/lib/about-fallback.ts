@@ -14,6 +14,9 @@ export const aboutProfileFallback: Partial<Profile> = {
   location: "Sofia, Bulgaria",
   email: "YankovWeb@outlook.com",
   linkedin_url: "https://linkedin.com/in/g-yankov",
+  // Started at Phoenix in July 2026 — don't advertise "Open to work" by default.
+  // The admin profile (Supabase) overrides this once a profile row exists.
+  availability_status: "unavailable",
 };
 
 export const aboutExperiencesFallback: AboutHighlightExperience[] = [
@@ -93,6 +96,25 @@ export const aboutExperiencesFallback: AboutHighlightExperience[] = [
       "Engineered secure session migration via native keychain storage — users kept authenticated sessions without re-login.",
       "Created a cross-platform Design System from scratch; owned end-to-end App Store and Google Play releases.",
       "Leveraged AI coding agents (Cursor, Claude Code) for velocity while maintaining structural integrity and code validation.",
+    ],
+    storyBridge:
+      "Migrating an entire product across a technology boundary — without losing a single user session — is the kind of challenge I now bring to Phoenix as a senior engineer.",
+  },
+  {
+    id: "exp-phoenix",
+    company: "Phoenix",
+    role: "Senior React Native Developer",
+    location: "Sofia, Bulgaria",
+    start_date: "2026-07-01",
+    end_date: null,
+    current: true,
+    sort_order: 5,
+    created_at: "",
+    description: null,
+    badge: "New · Started Jul 2026",
+    highlights: [
+      "Senior engineer on Phoenix's React Native mobile products — owning architecture, performance, and delivery.",
+      "Bringing AI-forward workflows (Claude Code, Cursor) and DDD-grounded architecture into day-to-day product engineering.",
     ],
   },
 ];
@@ -197,7 +219,7 @@ export const certificationGroupLabels: Record<Certification["group"], string> = 
 };
 
 export const aboutSummaryShort =
-  "Senior engineer building scalable React & React Native products — from enterprise mobile migrations to monorepos and AI-forward delivery with Cursor and Claude Code, always grounded in DDD and solid architecture. I also teach at STEP IT Academy and I'm open to Senior and Lead roles.";
+  "Senior engineer building scalable React & React Native products — from enterprise mobile migrations to monorepos and AI-forward delivery with Cursor and Claude Code, always grounded in DDD and solid architecture. Currently Senior React Native Developer at Phoenix, and I teach at STEP IT Academy on the side.";
 
 export type RecommendationRelation =
   | "manager"

@@ -56,6 +56,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-unbounded);
 }
 
 html {
@@ -68,6 +69,12 @@ html {
 
 html.dark {
   color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -93,6 +100,36 @@ body::before {
     radial-gradient(ellipse 70% 50% at 100% 0%, var(--glow-2), transparent 50%),
     radial-gradient(ellipse 50% 40% at 50% 100%, var(--glow-3), transparent 55%);
   transition: background 0.4s ease;
+}
+
+/* Film grain — adds depth to the flat gradient surfaces */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+html[data-a11y-contrast="high"] body::after {
+  display: none;
+}
+
+/* Dot grid backdrop (hero) — fades out via mask so it never fights content */
+.dot-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--accent) 25%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  mask-image: radial-gradient(
+    ellipse 75% 65% at 28% 22%,
+    black,
+    transparent 72%
+  );
 }
 
 ::selection {

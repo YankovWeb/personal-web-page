@@ -27,7 +27,7 @@ export function Header({ name }: { name: string }) {
         <Link
           href="/"
           className={cn(
-            "font-mono text-sm font-semibold tracking-tight",
+            "font-display text-sm font-medium tracking-tight",
             isHome
               ? "text-gradient-interactive"
               : "transition-colors hover:text-accent",

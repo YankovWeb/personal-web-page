@@ -26,6 +26,18 @@ export async function getProfile(): Promise<Profile | null> {
   return data ? normalizeProfile(data) : data;
 }
 
+/** The CMS allows publishing the same article twice under different slugs —
+ * keep only the newest row per title so lists don't show duplicates. */
+function dedupeArticlesByTitle(articles: Article[]): Article[] {
+  const seen = new Set<string>();
+  return articles.filter((article) => {
+    const key = article.title.trim().toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export async function getPublishedArticles(limit?: number): Promise<Article[]> {
   const supabase = await createClient();
   let query = supabase
@@ -34,10 +46,11 @@ export async function getPublishedArticles(limit?: number): Promise<Article[]> {
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
-  if (limit) query = query.limit(limit);
+  if (limit) query = query.limit(limit * 2);
 
   const { data } = await query;
-  return data ?? [];
+  const deduped = dedupeArticlesByTitle(data ?? []);
+  return limit ? deduped.slice(0, limit) : deduped;
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {

@@ -18,7 +18,7 @@ export function PageHeader({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: motionEase }}
-        className="text-3xl font-bold"
+        className="font-display text-3xl font-semibold tracking-tight"
       >
         {gradientTitle ? <span className="text-gradient">{title}</span> : title}
       </motion.h1>

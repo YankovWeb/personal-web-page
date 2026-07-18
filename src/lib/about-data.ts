@@ -12,7 +12,7 @@ import {
 import { getExperiences, getProfile, getSkills } from "@/lib/queries";
 import type { Experience, Profile, Skill } from "@/lib/types";
 
-function mergeProfile(db: Profile | null): Profile {
+export function mergeProfile(db: Profile | null): Profile {
   if (!db) {
     return {
       id: "fallback",

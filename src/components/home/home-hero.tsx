@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Hand, Mail, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  GraduationCap,
+  Hand,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import { motionEase } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +35,7 @@ export function HomeHero({ profile }: { profile: Profile | null }) {
 
   return (
     <section className="relative overflow-hidden py-12 md:py-16">
+      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute left-0 top-0 h-40 w-40 -translate-x-1/4 rounded-full bg-accent/10 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-36 w-36 translate-x-1/4 rounded-full bg-accent-secondary/10 blur-3xl" />
 
@@ -59,7 +67,7 @@ export function HomeHero({ profile }: { profile: Profile | null }) {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.06, ease: motionEase }}
-            className="text-4xl font-bold tracking-tight sm:text-5xl"
+            className="font-display text-4xl font-semibold tracking-tight sm:text-5xl"
           >
             Hey, I&apos;m{" "}
             <span className="text-gradient">{firstName}</span>
@@ -112,9 +120,34 @@ export function HomeHero({ profile }: { profile: Profile | null }) {
           </motion.div>
 
           <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.36, ease: motionEase }}
+            className="mt-8 inline-flex flex-col gap-3 rounded-xl border border-border bg-surface/60 px-5 py-4 backdrop-blur-sm sm:flex-row sm:items-center sm:gap-6"
+          >
+            <p className="flex items-center gap-2 text-sm">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <Briefcase size={15} className="shrink-0 text-accent" />
+              <span>
+                Senior React Native Developer{" "}
+                <span className="text-muted">@ Phoenix</span>
+              </span>
+            </p>
+            <p className="flex items-center gap-2 text-sm">
+              <GraduationCap size={16} className="shrink-0 text-accent" />
+              <span>
+                Lecturer <span className="text-muted">@ STEP IT Academy</span>
+              </span>
+            </p>
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.38 }}
+            transition={{ duration: 0.5, delay: 0.42 }}
             className="mt-5"
           >
             <Link
@@ -139,15 +172,15 @@ export function HomeHero({ profile }: { profile: Profile | null }) {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="relative"
+            className="relative overflow-hidden rounded-[1.35rem] p-[3px] shadow-[0_24px_60px_-20px_var(--toggle-glow)]"
           >
             <motion.div
               aria-hidden
               animate={{ rotate: 360 }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-1 rounded-[1.35rem] bg-gradient-to-br from-accent via-accent-secondary to-accent opacity-70 blur-[2px]"
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-[-75%] bg-[conic-gradient(from_0deg,var(--accent),var(--accent-secondary),var(--accent))]"
             />
-            <div className="relative z-10 overflow-hidden rounded-2xl border-2 border-border bg-surface shadow-[0_24px_60px_-20px_var(--toggle-glow)]">
+            <div className="relative z-10 overflow-hidden rounded-2xl bg-surface">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={avatarSrc}

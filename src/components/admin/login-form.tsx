@@ -1,30 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getAuthErrorMessage, parseAuthHashErrors } from "@/lib/auth-errors";
 
 const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase() ?? "";
 
-function mapLoginError(message: string): string {
-  if (message.includes("Invalid login credentials")) {
-    return "Грешен email или парола.";
-  }
-  return message;
+function Spinner({ className }: { className?: string }) {
+  return (
+    <svg
+      className={`animate-spin ${className ?? "h-4 w-4"}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+      />
+    </svg>
+  );
 }
 
-export function LoginForm({ errorParam }: { errorParam?: string }) {
+export function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState(ADMIN_EMAIL);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(
-    errorParam === "unauthorized"
-      ? "Нямаш достъп до admin панела."
-      : null,
-  );
+  const [error, setError] = useState<string | null>(() => {
+    // Parse hash fragment errors from Supabase auth redirects on mount
+    if (typeof window === "undefined") return null;
+    const hash = window.location.hash;
+    if (!hash) return null;
+    const { error: errorDesc, errorCode } = parseAuthHashErrors(hash);
+    if (!errorDesc && !errorCode) return null;
+    return getAuthErrorMessage(errorCode ?? errorDesc) ?? errorDesc ?? null;
+  });
+
+  // Clean up the hash so the error doesn't persist on refresh
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -46,7 +78,13 @@ export function LoginForm({ errorParam }: { errorParam?: string }) {
     setLoading(false);
 
     if (authError) {
-      setError(mapLoginError(authError.message));
+      // Try error code first, then match known message patterns
+      const mapped =
+        getAuthErrorMessage(authError.code) ??
+        (authError.message.includes("Invalid login credentials")
+          ? "Грешен email или парола."
+          : null);
+      setError(mapped ?? authError.message);
       return;
     }
 
@@ -55,13 +93,13 @@ export function LoginForm({ errorParam }: { errorParam?: string }) {
   }
 
   return (
-    <div className="w-full max-w-sm">
+    <>
       <h1 className="text-2xl font-bold">Admin Login</h1>
-      <p className="mt-2 text-sm text-muted">
+      <p className="mt-1 text-sm text-muted">
         Вход с email и парола — без magic link, без изчакване.
       </p>
 
-      <form onSubmit={handleLogin} className="mt-8 space-y-4">
+      <form onSubmit={handleLogin} className="mt-8 space-y-5">
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
             Email
@@ -74,10 +112,14 @@ export function LoginForm({ errorParam }: { errorParam?: string }) {
             placeholder="yankovweb@outlook.com"
             required
             autoComplete="email"
+            autoFocus
           />
         </div>
         <div>
-          <label htmlFor="password" className="mb-1.5 block text-sm font-medium">
+          <label
+            htmlFor="password"
+            className="mb-1.5 block text-sm font-medium"
+          >
             Password
           </label>
           <Input
@@ -89,15 +131,29 @@ export function LoginForm({ errorParam }: { errorParam?: string }) {
             autoComplete="current-password"
           />
         </div>
+
         {error && (
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-400">
-            {error}
+          <div className="rounded-xl border border-red-500/20 bg-red-500/8 p-4">
+            <p className="flex items-start gap-2 text-sm text-red-400">
+              <span className="mt-0.5 shrink-0 text-red-400/70" aria-hidden>
+                ⚠
+              </span>
+              <span>{error}</span>
+            </p>
           </div>
         )}
+
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Влизане..." : "Влез"}
+          {loading ? (
+            <>
+              <Spinner />
+              <span>Влизане...</span>
+            </>
+          ) : (
+            "Влез"
+          )}
         </Button>
       </form>
-    </div>
+    </>
   );
 }

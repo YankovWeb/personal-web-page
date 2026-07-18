@@ -39,12 +39,13 @@ export function AboutView({ data }: { data: AboutPageData }) {
         <AboutReveal className="mt-24">
           <div className="relative overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/10 via-surface to-accent-secondary/10 p-8 text-center md:p-12">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--glow-1),transparent_55%)]" />
-            <h2 className="relative text-2xl font-bold sm:text-3xl">
+            <h2 className="relative font-display text-2xl font-semibold tracking-tight sm:text-3xl">
               Let&apos;s build something ambitious
             </h2>
             <p className="relative mx-auto mt-3 max-w-xl text-muted">
-              Open to Senior and Lead roles where React, React Native, and
-              thoughtful architecture meet real product impact.
+              Building React Native products at Phoenix by day — and always up
+              for a good conversation about mobile architecture, AI-forward
+              engineering, and real product impact.
             </p>
             <div className="relative mt-8 flex flex-wrap justify-center gap-4">
               <Button href="/contact" size="lg">
